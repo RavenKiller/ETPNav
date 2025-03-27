@@ -51,27 +51,36 @@ Follow the [Habitat Installation Guide](https://github.com/facebookresearch/habi
 
    ```bash
    conda env create -f environment.yaml
+   conda activate vlnce
    ```
 2. Install `habitat-sim` for a machine with multiple GPUs or without an attached display (i.e. a cluster):
 
    ```bash
    conda install -c aihabitat -c conda-forge habitat-sim=0.1.7 headless
    ```
-3. Clone this repository and install all requirements for `habitat-lab`, VLN-CE and our experiments. Note that we specify `gym==0.21.0` because its latest version is not compatible with `habitat-lab-v0.1.7`.
+3.  Clone a stable `habitat-lab` version from the github repository and install. The command below will install the core of Habitat Lab as well as the habitat_baselines. **Notice:** You need to comment out the TensorFlow line in `habitat_baselines/rl/requirements.txt`.
+
+    ``` bash
+    git clone --branch v0.1.7 git@github.com:facebookresearch/habitat-lab.git
+    cd habitat-lab
+    python -m pip install -r requirements.txt
+    python -m pip install -r habitat_baselines/rl/requirements.txt
+    python -m pip install -r habitat_baselines/rl/ddppo/requirements.txt
+    python setup.py develop --all
+    ```
+4. Clone this repository and install all requirements for `habitat-lab`, VLN-CE and our experiments. Note that we specify `gym==0.21.0` because its latest version is not compatible with `habitat-lab-v0.1.7`.
 
    ```bash
    git clone git@github.com:MarSaKi/ETPNav.git
    cd ETPNav
-   python -m pip install -r requirements.txt
    pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+   pip install git+https://github.com/openai/CLIP.git
+   pip install gym==0.21.0
    ```
-4. Clone a stable `habitat-lab` version from the github repository and install. The command below will install the core of Habitat Lab as well as the habitat_baselines.
-
-   ```bash
-   git clone --branch v0.1.7 git@github.com:facebookresearch/habitat-lab.git
-   cd habitat-lab
-   python setup.py develop --all # install habitat and habitat_baselines
-   ```
+5. Download habitat-sim headless version from this [link](https://anaconda.org/aihabitat/habitat-sim/0.1.7/download/linux-64/habitat-sim-0.1.7-py3.6_headless_linux_856d4b08c1a2632626bf0d205bf46471a99502b7.tar.bz2). Install it to ensure that you're using the correct version.
+    ```bash
+    conda install habitat-sim-0.1.7-py3.6_headless_linux_856d4b08c1a2632626bf0d205bf46471a99502b7.tar.bz2
+    ```
 
 ### Scenes: Matterport3D
 
