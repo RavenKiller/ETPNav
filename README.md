@@ -138,14 +138,14 @@ Use `main.bash` for `Training/Evaluation/Inference with a single GPU or with mul
 # for R2R-CE
 CUDA_VISIBLE_DEVICES=0,1 bash run_r2r/main.bash train 2333  # training
 CUDA_VISIBLE_DEVICES=0,1 bash run_r2r/main.bash eval  2333  # evaluation
-CUDA_VISIBLE_DEVICES=0,1 bash run_r2r/main.bash inter 2333  # inference
+CUDA_VISIBLE_DEVICES=0,1 bash run_r2r/main.bash infer 2333  # inference
 ```
 
 ```
 # for RxR-CE
 CUDA_VISIBLE_DEVICES=0,1,2,3 bash run_rxr/main.bash train 2333  # training
 CUDA_VISIBLE_DEVICES=0,1,2,3 bash run_rxr/main.bash eval  2333  # evaluation
-CUDA_VISIBLE_DEVICES=0,1,2,3 bash run_rxr/main.bash inter 2333  # inference
+CUDA_VISIBLE_DEVICES=0,1,2,3 bash run_rxr/main.bash infer 2333  # inference
 ```
 
 # Contact Information
