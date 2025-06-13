@@ -1,6 +1,6 @@
 .ftpignore
 .ftpconfig
-.vscode
+# .vscode
 
 # Byte-compiled / optimized / DLL files
 .ipynb_checkpoints/
@@ -17,3 +17,6 @@ __pycache__/
 /interact
 /pretrain_src/datasets
 /pretrain_src/img_features
+
+*.out
+*.hdf5

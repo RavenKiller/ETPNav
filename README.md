@@ -117,6 +117,8 @@ Pre-training
 
 Download the pretraining datasets [[link]](https://www.dropbox.com/sh/u3lhng7t2gq36td/AABAIdFnJxhhCg2ItpAhMtUBa?dl=0) (the same one used in [DUET](https://github.com/cshizhe/VLN-DUET)) and precomputed features [[link]](https://drive.google.com/file/d/1D3Gd9jqRfF-NjlxDAQG_qwxTIakZlrWd/view?usp=sharing), unzip in folder `pretrain_src`
 
+
+Download [LXMERT](https://nlp.cs.unc.edu/data/model_LXRT.pth) into `pretrain_src/datasets/pretrained/LXMERT/model_LXRT.pth`
 ```
 CUDA_VISIBLE_DEVICES=0,1 bash pretrain_src/run_pt/run_r2r.bash 2333
 ```

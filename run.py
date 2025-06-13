@@ -44,9 +44,10 @@ def main():
         nargs=argparse.REMAINDER,
         help="Modify config options from command line",
     )
-    parser.add_argument('--local_rank', type=int, default=0, help="local gpu id")
+    # parser.add_argument('--local_rank', type=int, default=0, help="local gpu id")
+    local_rank = int(os.environ["LOCAL_RANK"])
     args = parser.parse_args()
-    run_exp(**vars(args))
+    run_exp(local_rank=local_rank, **vars(args))
 
 
 def run_exp(exp_name: str, exp_config: str, 

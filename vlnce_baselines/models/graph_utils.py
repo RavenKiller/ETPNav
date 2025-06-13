@@ -5,6 +5,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from habitat.tasks.utils import cartesian_to_polar
 from habitat.utils.geometry_utils import quaternion_rotate_vector, quaternion_from_coeff
+import warnings
+warnings.simplefilter("error", RuntimeWarning)
 
 MAX_DIST = 30
 MAX_STEP = 10
@@ -27,6 +29,10 @@ def calculate_vp_rel_pos_fts(a, b, base_heading=0, base_elevation=0, to_clock=Fa
     xz_dist = max(np.sqrt(dx**2 + dz**2), 1e-8)
     xyz_dist = max(np.sqrt(dx**2 + dy**2 + dz**2), 1e-8)
 
+    # Avoid arcsin invalid value (e.g., dx > xz_dist)
+    xz_dist = max(xz_dist, abs(dx), abs(dz))
+    xyz_dist = max(xz_dist, abs(dx), abs(dy), abs(dz))
+
     # the simulator's api is weired (x-y axis is transposed)
     # heading = np.arcsin(dx/xy_dist) # [-pi/2, pi/2]
     heading = np.arcsin(-dx / xz_dist)  # [-pi/2, pi/2]
@@ -38,7 +44,7 @@ def calculate_vp_rel_pos_fts(a, b, base_heading=0, base_elevation=0, to_clock=Fa
     if to_clock:
         heading = 2 * np.pi - heading
 
-    elevation = np.arcsin(dz / xyz_dist)  # [-pi/2, pi/2]
+    elevation = np.arcsin(dz / xyz_dist)
     elevation -= base_elevation
 
     return heading, elevation, xyz_dist
