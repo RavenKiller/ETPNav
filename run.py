@@ -81,6 +81,7 @@ def run_exp(exp_name: str, exp_config: str,
     config.freeze()
     os.system("mkdir -p data/logs/running_log")
     logger.add_filehandler('data/logs/running_log/'+config.LOG_FILE)
+    logger.info(config.dump())
 
     random.seed(config.TASK_CONFIG.SEED)
     np.random.seed(config.TASK_CONFIG.SEED)
@@ -101,7 +102,6 @@ def run_exp(exp_name: str, exp_config: str,
     trainer_init = baseline_registry.get_trainer(config.TRAINER_NAME)
     assert trainer_init is not None, f"{config.TRAINER_NAME} is not supported"
     trainer = trainer_init(config)
-
     # import pdb; pdb.set_trace()
     if run_type == "train":
         trainer.train()

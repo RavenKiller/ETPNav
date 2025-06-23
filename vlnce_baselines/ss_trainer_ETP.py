@@ -987,7 +987,7 @@ class RLTrainer(BaseVLNCETrainer):
                         continue
                     info = infos[i]
                     ep_id = curr_eps[i].episode_id
-                    gt_path = np.array(self.gt_data[str(ep_id)]['locations']).astype(np.float)
+                    gt_path = np.array(self.gt_data[str(ep_id)]['locations']).astype(np.float32)
                     pred_path = np.array(info['position']['position'])
                     distances = np.array(info['position']['distance'])
                     metric = {}
@@ -1004,7 +1004,8 @@ class RLTrainer(BaseVLNCETrainer):
                     metric['sdtw'] = metric['ndtw'] * metric['success']
                     metric['ghost_cnt'] = self.gmaps[i].ghost_cnt
                     self.stat_eps[ep_id] = metric
-                    self.pbar.update()
+                    if self.config.use_pbar:
+                        self.pbar.update()
 
             # record path
             if mode == 'infer':
@@ -1030,7 +1031,8 @@ class RLTrainer(BaseVLNCETrainer):
                             })
                     self.path_eps[ep_id] = self.path_eps[ep_id][:500]
                     self.path_eps[ep_id][-1]['stop'] = True
-                    self.pbar.update()
+                    if self.config.use_pbar:
+                        self.pbar.update()
 
             # pause env
             if sum(dones) > 0:

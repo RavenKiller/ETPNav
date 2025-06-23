@@ -30,6 +30,8 @@ def calculate_vp_rel_pos(p1, p2, base_heading=0, base_elevation=0):
     xz_dist = max(np.sqrt(dx**2 + dz**2), 1e-8)
     # xyz_dist = max(np.sqrt(dx**2 + dy**2 + dz**2), 1e-8)
 
+    xz_dist = max(xz_dist, abs(dx), abs(dz))
+    # xyz_dist = max(xz_dist, abs(dx), abs(dy), abs(dz))
     heading = np.arcsin(-dx / xz_dist)  # (-pi/2, pi/2)
     if p2[2] > p1[2]:
         heading = np.pi - heading

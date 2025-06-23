@@ -1,12 +1,32 @@
+#!/bin/bash
+#SBATCH --job-name etpnav # 作业名
+#SBATCH --partition L40 # amd 队列
+#SBATCH -N 1 # amd 队列
+#SBATCH -n 1 
+#SBATCH --gres=gpu:l40:1
+#SBATCH --cpus-per-task=7
+#SBATCH --output=r2r_iter12000.out
+#SBATCH --mail-type=end
+#SBATCH --mail-user=1161188300@qq.com
+
+source ~/.bashrc
+conda activate habitat21
+cd ~/hzt/clash
+nohup ./clash-linux-amd64-v1.2.0 -f 1725849302984.yml &
+export http_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7890
+cd ~/hzt/ETPNav
+
+
 export GLOG_minloglevel=2
 export MAGNUM_LOG=quiet
 
 flag1="--exp_name release_r2r
       --run-type train
       --exp-config run_r2r/iter_train.yaml
-      SIMULATOR_GPU_IDS [0,1]
-      TORCH_GPU_IDS [0,1]
-      GPU_NUMBERS 2
+      SIMULATOR_GPU_IDS [0]
+      TORCH_GPU_IDS [0]
+      GPU_NUMBERS 1
       NUM_ENVIRONMENTS 8
       IL.iters 15000
       IL.lr 1e-5
@@ -46,18 +66,19 @@ flag3="--exp_name release_r2r
       IL.back_algo control
       "
 
-mode=$1
+mode=eval
+port=2333
 case $mode in 
       train)
       echo "###### train mode ######"
-      torchrun --nproc_per_node=2 --master_port $2 run.py $flag1
+      torchrun --nproc_per_node=1 --master_port $port run.py $flag1
       ;;
       eval)
       echo "###### eval mode ######"
-      torchrun --nproc_per_node=1 --master_port $2 run.py $flag2
+      torchrun --nproc_per_node=1 --master_port $port run.py $flag2
       ;;
       infer)
       echo "###### infer mode ######"
-      torchrun --nproc_per_node=1 --master_port $2 run.py $flag3
+      torchrun --nproc_per_node=1 --master_port $port run.py $flag3
       ;;
 esac

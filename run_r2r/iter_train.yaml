@@ -1,4 +1,4 @@
-BASE_TASK_CONFIG_PATH: run_r2r/r2r_vlnce.yaml
+BASE_TASK_CONFIG_PATH: run_r2r/r2r_vlnce_v13.yaml
 SIMULATOR_GPU_IDS: [0]
 TORCH_GPU_ID: 0
 TORCH_GPU_IDS: [0]
